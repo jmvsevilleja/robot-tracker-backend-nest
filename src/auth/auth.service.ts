@@ -20,6 +20,15 @@ export class AuthService {
     return null;
   }
 
+  async validateUserById(id: string): Promise<User> {
+    const user = await this.usersService.findById(id);
+    if (user) {
+      const { ...result } = user;
+      return result;
+    }
+    return null;
+  }
+
   async login(user: User): Promise<{ token: string }> {
     const payload = { email: user.email, sub: user.id };
     return {
