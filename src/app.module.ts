@@ -8,6 +8,7 @@ import { Robot } from './robots/entities/robot.entity';
 import { RobotsModule } from './robots/robots.module';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UsersModule } from './users/users.module';
     ConfigModule.forRoot(),
     RobotsModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
