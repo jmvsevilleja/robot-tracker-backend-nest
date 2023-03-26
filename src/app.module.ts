@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RobotModule } from './robot/robot.module';
-import { Robot } from './robot/robot.entity';
+import { Robot } from './robots/entities/robot.entity';
+import { RobotsModule } from './robots/robots.module';
+import { User } from './users/entities/user.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -12,11 +14,12 @@ import { Robot } from './robot/robot.entity';
       host: '127.0.0.1',
       port: 27017,
       database: 'robots',
-      entities: [Robot],
+      entities: [Robot, User],
       synchronize: true,
       useUnifiedTopology: true,
     }),
-    RobotModule,
+    RobotsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
