@@ -20,6 +20,12 @@ export class RobotsService {
     return this.robotRepository.findOne(robot_id);
   }
 
+  async findRobotsByUserId(userId: string): Promise<Robot[]> {
+    return this.robotRepository.find({
+      where: { userId },
+    });
+  }
+
   async create(bot: Robot): Promise<Robot> {
     return await this.robotRepository.save(bot);
   }
