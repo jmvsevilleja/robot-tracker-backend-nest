@@ -25,15 +25,8 @@ export class RobotsService {
   }
 
   async update(id: string, bot: Robot): Promise<Robot> {
-    // const robot_id = new ObjectId(id);
-    // const robot = await this.robotRepository.findOne(robot_id);
-    // if (!robot) {
-    //   return undefined;
-    // }
-    // await this.robotRepository.update(id, bot);
-    // return this.robotRepository.findOne(robot_id);
-    bot.id = new ObjectId(id);
-    return this.robotRepository.save(bot);
+    await this.robotRepository.update(id, bot);
+    return this.findOne(id);
   }
 
   async delete(id: string): Promise<{ deleted: boolean }> {
