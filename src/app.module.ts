@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Robot } from './robots/entities/robot.entity';
@@ -9,15 +11,19 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      host: '127.0.0.1',
-      port: 27017,
-      database: 'robots',
-      entities: [Robot, User],
-      synchronize: true,
-      useUnifiedTopology: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mongodb',
+        url: configService.get<string>('MONGO_URI'),
+        synchronize: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        entities: [Robot, User],
+      }),
+      inject: [ConfigService],
     }),
+    ConfigModule.forRoot(),
     RobotsModule,
     UsersModule,
   ],
